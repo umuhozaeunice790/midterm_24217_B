@@ -2,6 +2,7 @@ package com.example.BuildingPermitMs.controller;
 
 import com.example.BuildingPermitMs.entity.Inspector;
 import com.example.BuildingPermitMs.service.InspectorService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -17,7 +18,8 @@ public class InspectorController {
 
     @PostMapping
     public ResponseEntity<Inspector> createInspector(@RequestBody Inspector inspector) {
-        return ResponseEntity.ok(inspectorService.createInspector(inspector));
+       Inspector created = inspectorService.createInspector(inspector);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @GetMapping

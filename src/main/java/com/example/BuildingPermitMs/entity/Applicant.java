@@ -3,6 +3,8 @@ package com.example.BuildingPermitMs.entity;
 import jakarta.persistence.*;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "applicants")
 public class Applicant {
@@ -17,7 +19,7 @@ public class Applicant {
     private String email;
 
     private String phone;
-
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "province_id", nullable = false)
     private Province province;

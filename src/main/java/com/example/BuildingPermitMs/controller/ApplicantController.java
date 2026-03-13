@@ -6,6 +6,7 @@ import com.example.BuildingPermitMs.service.ApplicantService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -21,7 +22,8 @@ public class ApplicantController {
 
     @PostMapping("/register")
     public ResponseEntity<Applicant> registerApplicant(@RequestBody ApplicantRequest request) {
-        return ResponseEntity.ok(applicantService.registerApplicant(request));
+        Applicant created = applicantService.registerApplicant(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @GetMapping("/province/name/{provinceName}")

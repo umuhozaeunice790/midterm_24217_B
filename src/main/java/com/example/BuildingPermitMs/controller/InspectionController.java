@@ -6,6 +6,7 @@ import com.example.BuildingPermitMs.service.InspectionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -21,7 +22,8 @@ public class InspectionController {
 
     @PostMapping("/record")
     public ResponseEntity<Inspection> recordInspection(@RequestBody InspectionRequest request) {
-        return ResponseEntity.ok(inspectionService.recordInspection(request));
+        Inspection created = inspectionService.recordInspection(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @GetMapping

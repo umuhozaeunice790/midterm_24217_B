@@ -3,6 +3,8 @@ package com.example.BuildingPermitMs.entity;
 import jakarta.persistence.*;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "provinces")
 public class Province {
@@ -16,6 +18,7 @@ public class Province {
     @Column(nullable = false)
     private String name;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "province", cascade = CascadeType.ALL)
     private List<Applicant> applicants;
 

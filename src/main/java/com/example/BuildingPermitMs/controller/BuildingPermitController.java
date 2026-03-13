@@ -7,6 +7,7 @@ import com.example.BuildingPermitMs.service.BuildingPermitService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -22,19 +23,20 @@ public class BuildingPermitController {
 
     @PostMapping("/submit")
     public ResponseEntity<BuildingPermit> submitPermit(@RequestBody BuildingPermitRequest request) {
-        return ResponseEntity.ok(permitService.submitPermit(request));
+     BuildingPermit created = permitService.submitPermit(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @PostMapping("/{permitId}/assign-inspectors")
     public ResponseEntity<BuildingPermit> assignInspectors(
             @PathVariable Long permitId,
             @RequestBody AssignInspectorRequest request) {
-        return ResponseEntity.ok(permitService.assignInspectors(permitId, request));
+           return ResponseEntity.ok(permitService.assignInspectors(permitId, request));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<BuildingPermit> getPermitById(@PathVariable Long id) {
-        return ResponseEntity.ok(permitService.getPermitById(id));
+      return ResponseEntity.ok(permitService.getPermitById(id));
     }
 
     @GetMapping
@@ -46,7 +48,7 @@ public class BuildingPermitController {
     public ResponseEntity<Page<BuildingPermit>> getPermitsPaginated(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
-        return ResponseEntity.ok(permitService.getAllPermits(PageRequest.of(page, size)));
+         return ResponseEntity.ok(permitService.getAllPermits(PageRequest.of(page, size)));
     }
 
     @GetMapping("/sorted")
@@ -55,7 +57,7 @@ public class BuildingPermitController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "submissionDate") String sortBy,
             @RequestParam(defaultValue = "DESC") String direction) {
-        Sort.Direction sortDirection = direction.equalsIgnoreCase("DESC") ? Sort.Direction.DESC : Sort.Direction.ASC;
+         Sort.Direction sortDirection = direction.equalsIgnoreCase("DESC") ? Sort.Direction.DESC : Sort.Direction.ASC;
         return ResponseEntity.ok(permitService.getAllPermits(
             PageRequest.of(page, size, Sort.by(sortDirection, sortBy))));
     }
